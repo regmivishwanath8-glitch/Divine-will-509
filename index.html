@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Divine Will 509</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; background:#f9f9f9; }
+    #chatBtn { position: fixed; bottom: 20px; right: 20px; width:60px; height:60px; border-radius:50%; background:#800080; color:#fff; border:none; font-size:24px; cursor:pointer; }
+    #chatBox { display:none; position:fixed; bottom:90px; right:20px; width:340px; height:420px; border:2px solid #800080; border-radius:12px; background:#fff; display:flex; flex-direction:column; }
+    #chatHeader { background:#800080; color:#fff; padding:6px; font-weight:bold; display:flex; justify-content:space-between; align-items:center; }
+    #chatHeader span { flex:1; }
+    #toolbar button { background:transparent; border:none; color:#fff; font-size:18px; margin:0 3px; cursor:pointer; }
+    #messages { flex:1; overflow-y:auto; padding:8px; font-size:14px; }
+    #inputArea { display:flex; border-top:1px solid #ccc; }
+    #userInput { flex:1; padding:5px; border:none; }
+    #sendBtn { background:#800080; color:#fff; border:none; padding:5px 10px; cursor:pointer; }
+  </style>
+</head>
+<body>
+<button id="chatBtn">☼</button>
+<div id="chatBox">
+  <div id="chatHeader">
+    <span>🌸 Divine Will 509 🌸</span>
+    <div id="toolbar">
+      <button id="downloadBtn">⬇</button>
+      <button id="shareBtn">🔗</button>
+      <button id="clearBtn">🗑</button>
+    </div>
+  </div>
+  <div id="messages">✨ स्वागत है! नया Divine अनुभव शुरू करें...</div>
+  <div id="inputArea">
+    <input id="userInput" placeholder="Type Divine Message...">
+    <button id="sendBtn">➤</button>
+  </div>
+</div>
+
+<script>
+const btn = document.getElementById("chatBtn");
+const box = document.getElementById("chatBox");
+const input = document.getElementById("userInput");
+const send = document.getElementById("sendBtn");
+const msgs = document.getElementById("messages");
+
+const downloadBtn = document.getElementById("downloadBtn");
+const shareBtn = document.getElementById("shareBtn");
+const clearBtn = document.getElementById("clearBtn");
+
+btn.onclick = ()=>{ box.style.display = (box.style.display==="none" || box.style.display==="") ? "flex" : "none"; };
+
+function addMessage(sender,text){ msgs.innerHTML += `<div><b>${sender}:</b> ${text}</div>`; msgs.scrollTop = msgs.scrollHeight; }
+
+send.onclick = ()=>{
+  let val = input.value.trim();
+  if(val){
+    addMessage("You", val);
+    let reply = "🌺 Divine Response: ";
+    if(val.includes("नमस्ते")) reply += "जय श्री महाकाल!";
+    else if(val.includes("कुंडली")) reply += "कुंडली बनाने का प्रारंभ करें।";
+    else if(val.includes("धन")) reply += "धन संबंधी सुझाव: संयमित निवेश करें।";
+    else reply += "आपका संदेश प्राप्त हुआ। भविष्य में AI response यहाँ आएगा।";
+    addMessage("Bot", reply);
+    input.value="";
+  }
+};
+
+downloadBtn.onclick = ()=>{
+  let content = msgs.innerText;
+  let blob = new Blob([content], {type:"text/plain"});
+  let a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "DivineChat.txt";
+  a.click();
+};
+
+shareBtn.onclick = ()=>{
+  let content = msgs.innerText;
+  navigator.clipboard.writeText(content).then(()=>{ alert("✅ Messages copied! कहीं भी paste कर सकते हैं।"); });
+};
+
+clearBtn.onclick = ()=>{
+  if(confirm("क्या आप सभी messages हटाना चाहते हैं?")){ msgs.innerHTML = "✨ नया Divine चैट शुरू करें..."; }
+};
+</script>
+</body>
+</html>
